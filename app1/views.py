@@ -58,6 +58,7 @@ def logout(l3):
 def signup(l2):
     if l2.method == 'POST':
         n = l2.POST.get('name')
+        print("n",n)
         e = l2.POST.get('email')
         ph = l2.POST.get('phone')
         u = l2.POST.get('username')
