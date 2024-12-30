@@ -1,0 +1,324 @@
+class Employee:
+'''Common base class for all employees'''
+	empCount=0#class variable
+ 	def __init__(self, name, salary):#initializationmethod/constructor
+		self.name = name
+		self.salary = salary#instance variable
+ 		Employee.empCount+=1
+	def displayCount(self):#instance method
+		print('Total employee %d' %Employee.empCount)
+ 	def displayEmployee(self):
+		print('Name:', self.name, 'Salary:', self.salary)
+print(Employee.__doc__)
+emp1 = Employee('John',50000)
+emp2 = Employee('Jane',60000)
+emp1.displayEmployee() 
+emp2.dispalyEmployee()
+emp1.displayCount() 
+----------------------------------------------------
+Access attributes
+-----------------------------------------------
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+# Create an instance of the Person class
+person = Person("Alice", 25)
+
+# 1. getattr() - Get the value of an attribute
+name = getattr(person, "name")  # Equivalent to person.name
+print(f"Name: {name}")  # Output: Name: Alice
+
+# 2. hasattr() - Check if an attribute exists
+has_age = hasattr(person, "age")  # Checks if 'age' attribute exists
+print(f"Has age? {has_age}")  # Output: Has age? True
+
+# 3. setattr() - Set or update the value of an attribute
+setattr(person, "age", 30)  # Updates the age attribute
+print(f"Updated Age: {person.age}")  # Output: Updated Age: 30
+
+# Bonus: Dynamically add a new attribute
+setattr(person, "city", "New York")
+print(f"City: {getattr(person, 'city')}")  # Output: City: New York
+
+-----------------------------------------------------
+instance method
+instance methods can access and modify both 
+class attributes and instance attributes. Similar to a class method, an 
+instance method is just a function in a class. It also starts with the 
+keyword “def”. Its first parameter is the keyword “self”. The self 
+parameter binds the method to the instance object. Instance methods are 
+used more often than class methods because they can access both class 
+and instance attributes. 
+--------------------------------------------------
+class Dog: 
+	count=0
+ 	def __init__(self, name, age): 
+ 		self.name = name 
+ 		self.age = age 
+ 	def bark(self): 
+ 		return f"{self.name}{Dog.count} says woof!" 
+ 	def get_age(self): 
+ 		return self.age 
+ 	def set_age(self, age): 
+ 		self.age = age 
+# Create an instance of Dog 
+my_dog = Dog("Buddy", 5) 
+print(my_dog.bark())
+print(my_dog.get_age()) 
+my_dog.set_age(6) 
+print(my_dog.get_age()) 
+----------------------------------------------------------
+class method
+A class method is a type of method that is bound to 
+the class and not the instance of the class. In other words, it operates on 
+the class as a whole, rather than on a specific instance of the class. Class 
+methods are defined using the "@classmethod" decorator, followed by a 
+function definition. The first argument of the function is always "cls," 
+which represents the class itself. 
+
+-----------------------------------------------------------
+class MyClass: 
+ 	# Class attribute
+ 	count = 0 
+ 	def __init__(self): 
+ 		MyClass.count += 1 
+
+ 	# Class method using the @classmethod decorator
+ 	@classmethod
+ 	def get_count(cls): 
+ 		return cls.count 
+# Create instances of MyClass 
+obj1 = MyClass() 
+obj2 = MyClass() 
+obj3 = MyClass() 
+# Call the class method 
+print(MyClass.get_count())
+------------------------------------------------------------
+static method #static methods cannot access class attributes or instance attributes.
+----------------------------------------------------
+class MathOperations: 
+	
+ 	@staticmethod
+ 	def add(a, b): 
+ 		return a + b 
+ 	@staticmethod
+ 	def multiply(a, b): 
+ 		return a * b 
+# Using static methods without creating an instance of the class 
+result_add = MathOperations.add(10, 5) 
+result_multiply = MathOperations.multiply(10, 5) 
+print(f"Addition Result: {result_add}")
+print(f"Multiplication Result: {result_multiply}") 
+--------------------------------------------------------------
+Constructor
+---------------------------------------------------------------
+A constructor is a special method in a class used to create and initialize an 
+object of a class. 
+Constructor is invoked automatically when an object of a class is created. 
+It cannot return any value other than None.
+In Python the __init__() method is called the constructor and is always called 
+when an object is created.
+1. Parameterized Constructor 
+class Details: 
+	def __init__(self, animal, group): 
+		self.animal = animal 
+		self.group = group 
+ 
+obj1 = Details("Crab", "Crustaceans") 
+print(obj1.animal, "belongs to the", obj1.group, "group.") 
+
+2. Default Constructor 
+class Details: 
+	def __init__(self): 
+ 		print("animal Crab belongs to Crustaceans group") 
+obj1=Details()
+--------------------------------------------------------------
+Destructor
+---------------------------------------------------------------
+The __del__() method is a known as a destructor method in Python.
+
+class Employee: 
+ 	# Initializing with name and age 
+ 	def __init__(self, name, age): 
+ 		self.name = name 
+ 		self.age = age 
+ 		print(f'Employee {self.name}, {self.age} years old, created.') 
+ 	# Method to display employee details 
+ 	def display(self): 
+ 		print(f'Name: {self.name}, Age: {self.age}') 
+ 	# Deleting (Calling destructor)
+ 	def __del__(self): 
+ 		print(f'Destructor called, Employee {self.name} deleted.') 
+
+emp1 = Employee("John", 30)
+emp1.display() 
+del emp1
+emp1.display()
+------------------------------------------------------------------
+Inheritance
+The process of inheriting the properties of the parent class into a child class is 
+called inheritance. The existing class is called a base class or parent class and 
+the new class is called a subclass or child class or derived class. 
+Syntax:
+class Baseclass:
+	//body base class
+class Derivedclass(Baseclass):
+	//body of derived class
+types of inheritance
+1.single inheritance
+one parentclass-->one child class
+2.multiple Inheritance
+multile parent class-->one child class
+3.multilevel
+parentclass--->childclass-->childclass
+4.hierarchical
+parentclass-->multiple child class
+5.hybrid
+--------------------------------------------------------------
+single inheritance
+------------------------------------------------------------
+
+class Animal: 
+ 	def __init__(self, name): 
+ 		self.name = name 
+ 	def speak(self): 
+ 		raise NotImplementedError("Subclasses must implement this method") 
+# Child class inheriting from Animal 
+class Dog(Animal): 
+ 	def speak(self): 
+ 		return f"{self.name} says Woof!"
+# Creating an instance of Dog 
+my_dog = Dog("Buddy") 
+print(my_dog.speak()) 
+-------------------------------------------------------------------
+Multiple Inheritance
+------------------------------------------------------------------
+# Parent class 1 
+class Animal: 
+ 	def __init__(self, name): 
+ 		self.name = name 
+ 	def speak(self): 
+ 		raise NotImplementedError("Subclasses must implement this method") 
+
+# Parent class 2 
+class Pet: 
+ 	def __init__(self, owner): 
+ 		self.owner = owner 
+ 	def show_owner(self): 
+ 		return f"Owner: {self.owner}"
+
+# Child class inheriting from both Animal and Pet 
+class Dog(Animal, Pet): 
+	def __init__(self, name, owner): 
+ 		Animal.__init__(self, name) 
+ 		Pet.__init__(self, owner) 
+ 	def speak(self): 
+ 		return f"{self.name} says Woof!"
+
+# Creating an instance of Dog 
+my_dog = Dog("Buddy", "Alice") 
+print(my_dog.speak()) 
+print(my_dog.show_owner()) 
+-------------------------------------------------------------------
+Multilevel Inheritance
+-------------------------------------------------------------------
+# Base class 
+class Animal: 
+ 	def __init__(self, name): 
+ 		self.name = name 
+ 	def speak(self): 
+ 		raise NotImplementedError("Subclasses must implement this method") 
+
+# Intermediate class inheriting from Animal 
+class Mammal(Animal): 
+ 	def __init__(self, name, has_fur): 
+ 		Animal.__init__(self, name) 
+ 		self.has_fur = has_fur 
+ 	def describe(self): 
+ 		return f"{self.name} has fur: {self.has_fur}" 
+
+# Derived class inheriting from Mammal 
+class Dog(Mammal): 
+ 	def __init__(self, name, has_fur, breed): 
+ 		Mammal.__init__(self, name, has_fur) 
+ 		self.breed = breed 
+ 	def speak(self): 
+ 		return f"{self.name} says Woof!"
+	def describe_breed(self): 
+ 		return f"{self.name} is a {self.breed}"
+
+# Creating an instance of Dog 
+my_dog = Dog("Buddy", True, "Golden Retriever") 
+print(my_dog.speak()) 
+print(my_dog.describe()) 
+print(my_dog.describe_breed())
+-----------------------------------------------------------------------
+heirarchical inheritance
+--------------------------------------------------------------------------
+# Base class 
+class Animal: 
+ 	def __init__(self, name): 
+ 		self.name = name 
+ 	def speak(self): 
+ 		raise NotImplementedError("Subclass must implement abstract method") 
+
+# Derived class 1 
+class Dog(Animal): 
+ 	def speak(self): 
+ 		return f"{self.name} says Woof!"
+
+# Derived class 2 
+class Cat(Animal): 
+ 	def speak(self): 
+ 		return f"{self.name} says Meow!"
+
+# Derived class 3 
+class Bird(Animal): 
+ 	def speak(self): 
+ 		return f"{self.name} says Tweet!"
+
+# Creating objects of derived classes
+dog = Dog("Buddy") 
+cat = Cat("Whiskers") 
+bird = Bird("Tweety") 
+print(dog.speak()) 
+print(cat.speak()) 
+print(bird.speak()) 
+--------------------------------------------------------------------------
+Hybrid Inheritance
+---------------------------------------------------------------------------
+# Base class 
+class A: 
+ 	def method_a(self): 
+ 		print("Method A from class A") 
+
+# Derived class from A (single inheritance) 
+class B(A): 
+ 	def method_b(self): 
+ 		print("Method B from class B") 
+
+# Another base class 
+class C: 
+ 	def method_c(self): 
+ 		print("Method C from class C") 
+
+# Derived class from B and C (multiple inheritance)
+class D(B, C): 
+ 	def method_d(self): 
+ 		print("Method D from class D") 
+
+# Further derived class from D (multilevel inheritance) 
+class E(D): 
+ 	def method_e(self): 
+ 		print("Method E from class E") 
+
+# Object of class E 
+obj = E() 
+# Calling methods from different classes 
+obj.method_a() 
+obj.method_b() 
+obj.method_c() 
+obj.method_d()  
+obj.method_e()
